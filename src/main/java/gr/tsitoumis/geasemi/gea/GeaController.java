@@ -1,7 +1,7 @@
-package gr.tsitoumis.geasemi.semi;
+package gr.tsitoumis.geasemi.gea;
 
-import gr.tsitoumis.geasemi.semi.schemas.SemiRunRequestBody;
-import gr.tsitoumis.geasemi.semi.schemas.SemiRunResponseBody;
+import gr.tsitoumis.geasemi.gea.schemas.GeaRunRequestBody;
+import gr.tsitoumis.geasemi.gea.schemas.GeaRunResponseBody;
 import gr.tsitoumis.geasemi.services.CommandService;
 import gr.tsitoumis.geasemi.services.GeaSemiException;
 import gr.tsitoumis.geasemi.services.GitTools;
@@ -14,29 +14,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/semi")
-public class SemiController {
+@RequestMapping("/gea")
+public class GeaController {
     @RequestMapping(value = "run", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<SemiRunResponseBody> run(@RequestBody SemiRunRequestBody request) throws Exception {
+    public ResponseEntity<GeaRunResponseBody> run(@RequestBody GeaRunRequestBody request) throws Exception {
         String url = request.getUrl();
         String name = GitTools.getProjectName(request.getUrl());
-        String version = request.getVersion();
         String lang = request.getLanguage();
 
-        ResponseEntity<SemiRunResponseBody> response;
+        ResponseEntity<GeaRunResponseBody> response;
 
         try {
             CommandService.gitClone(url);
-
-            CommandService.semiRun(name, lang, version);
-            
-            response = ResponseEntity.status(HttpStatus.OK).body(new SemiRunResponseBody("Semi analysis COMPLETED"));
+            CommandService.geaRun(name, lang);
+            response = ResponseEntity.status(HttpStatus.OK).body(new GeaRunResponseBody("Gea analysis COMPLETED"));
         } catch (GeaSemiException e) {
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SemiRunResponseBody("Semi analysis FAILED: " + e.getMessage()));
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeaRunResponseBody("Gea analysis FAILED: " + e.getMessage()));
         } catch (Exception e) {
-
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SemiRunResponseBody("Semi analysis FAILED"));
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeaRunResponseBody("Gea analysis FAILED: Internal Error"));
         }
 
         CommandService.deleteProject(name);

@@ -1,11 +1,9 @@
 package gr.tsitoumis.geasemi.services;
 
-import gr.tsitoumis.geasemi.semi.schemas.SemiRunRequestBody;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
@@ -27,6 +25,7 @@ public class CommandService {
                     .forEach(consumer);
         }
     }
+
 
     // TODO: CONFIG SECRETS
     private static String dbString = "195.251.210.147:3363 metrics metrics 308d139ce20d7695a301d723f8bf379d1fc7dd899966d8102578d4acc85bbf8e";
@@ -57,7 +56,6 @@ public class CommandService {
     }
 
     // Git
-
     public static void gitClone(String project) throws Exception {
 
         int exitCode = runCmd("git clone " + project, "./gitRepositories");
@@ -72,7 +70,7 @@ public class CommandService {
     }
 
     // Semi
-    public static void semiRun(String name, String lang, String version) throws Exception {
+    public static void semiRun(String name, String lang, String version) throws GeaSemiException {
         try {
 
             Path projectPath = Paths.get("gitRepositories/" + name).toAbsolutePath();
@@ -88,7 +86,28 @@ public class CommandService {
             }
 
         } catch (Exception e) {
-            throw new Exception("semi analysis failed");
+            throw new GeaSemiException("Semi analysis execution failed");
+        }
+    }
+
+    // Gea
+    public static void geaRun(String name, String lang) throws GeaSemiException {
+        try {
+
+            Path projectPath = Paths.get("gitRepositories/" + name).toAbsolutePath();
+            Path geaPath = Paths.get("geasemiJars/DeRec-GEA-1.0-SNAPSHOT-jar-with-dependencies.jar").toAbsolutePath();
+            Path geaExtractPosition = Paths.get("gitRepositories/" + name).toAbsolutePath();
+
+            String command = "java -jar" + " " + geaPath + " " + lang + " " + name + " " + projectPath + " " + dbString;
+
+            int exitCode = runCmd(command, geaExtractPosition.toString());
+
+            if (exitCode != 0) {
+                throw new GeaSemiException("");
+            }
+
+        } catch (Exception e) {
+            throw new GeaSemiException("Gea analysis execution failed");
         }
     }
 
