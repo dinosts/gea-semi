@@ -1,6 +1,5 @@
 HELP.md
 target/
-!gitRepositories/.gitkeep
 gitRepositories/*
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -20,6 +19,7 @@ gitRepositories/*
 *.iws
 *.iml
 *.ipr
+!.gitkeep
 
 ### NetBeans ###
 /nbproject/private/
