@@ -2,9 +2,9 @@ package gr.tsitoumis.geasemi.gea;
 
 import gr.tsitoumis.geasemi.gea.schemas.GeaRunRequestBody;
 import gr.tsitoumis.geasemi.gea.schemas.GeaRunResponseBody;
-import gr.tsitoumis.geasemi.services.CommandService;
-import gr.tsitoumis.geasemi.services.GeaSemiException;
-import gr.tsitoumis.geasemi.services.GitTools;
+import gr.tsitoumis.geasemi.utils.Commands;
+import gr.tsitoumis.geasemi.utils.GeaSemiException;
+import gr.tsitoumis.geasemi.utils.GitTools;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,12 +22,11 @@ public class GeaController {
         String url = request.getUrl();
         String name = GitTools.getProjectName(request.getUrl());
         String lang = request.getLanguage();
-
         ResponseEntity<GeaRunResponseBody> response;
 
         try {
-            CommandService.gitClone(url);
-            CommandService.geaRun(name, lang);
+            Commands.gitClone(url);
+            Commands.geaRun(name, lang);
             response = ResponseEntity.status(HttpStatus.OK).body(new GeaRunResponseBody("Gea analysis COMPLETED"));
         } catch (GeaSemiException e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeaRunResponseBody("Gea analysis FAILED: " + e.getMessage()));
@@ -35,7 +34,7 @@ public class GeaController {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GeaRunResponseBody("Gea analysis FAILED: Internal Error"));
         }
 
-        CommandService.deleteProject(name);
+        Commands.deleteProject(name);
 
         return response;
     }

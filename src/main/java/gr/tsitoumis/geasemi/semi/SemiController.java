@@ -2,9 +2,9 @@ package gr.tsitoumis.geasemi.semi;
 
 import gr.tsitoumis.geasemi.semi.schemas.SemiRunRequestBody;
 import gr.tsitoumis.geasemi.semi.schemas.SemiRunResponseBody;
-import gr.tsitoumis.geasemi.services.CommandService;
-import gr.tsitoumis.geasemi.services.GeaSemiException;
-import gr.tsitoumis.geasemi.services.GitTools;
+import gr.tsitoumis.geasemi.utils.Commands;
+import gr.tsitoumis.geasemi.utils.GeaSemiException;
+import gr.tsitoumis.geasemi.utils.GitTools;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,10 +27,10 @@ public class SemiController {
         ResponseEntity<SemiRunResponseBody> response;
 
         try {
-            CommandService.gitClone(url);
+            Commands.gitClone(url);
 
-            CommandService.semiRun(name, lang, version);
-            
+            Commands.semiRun(name, lang, version);
+
             response = ResponseEntity.status(HttpStatus.OK).body(new SemiRunResponseBody("Semi analysis COMPLETED"));
         } catch (GeaSemiException e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SemiRunResponseBody("Semi analysis FAILED: " + e.getMessage()));
@@ -39,7 +39,7 @@ public class SemiController {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SemiRunResponseBody("Semi analysis FAILED"));
         }
 
-        CommandService.deleteProject(name);
+        Commands.deleteProject(name);
 
         return response;
     }
