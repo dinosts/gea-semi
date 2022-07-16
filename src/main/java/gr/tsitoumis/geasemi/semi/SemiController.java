@@ -1,17 +1,19 @@
 package gr.tsitoumis.geasemi.semi;
 
-import gr.tsitoumis.geasemi.semi.schemas.SemiRunRequestBody;
-import gr.tsitoumis.geasemi.semi.schemas.SemiRunResponseBody;
+import gr.tsitoumis.geasemi.semi.entities.SemiGetResponseBody;
+import gr.tsitoumis.geasemi.utils.Paging;
+import gr.tsitoumis.geasemi.semi.entities.SemiRunRequestBody;
+import gr.tsitoumis.geasemi.semi.entities.SemiRunResponseBody;
 import gr.tsitoumis.geasemi.utils.Commands;
 import gr.tsitoumis.geasemi.utils.GeaSemiException;
 import gr.tsitoumis.geasemi.utils.GitTools;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/semi")
@@ -43,4 +45,15 @@ public class SemiController {
 
         return response;
     }
+
+    @Autowired
+    SemiService service = new SemiService();
+
+    @RequestMapping(value = "get", method = RequestMethod.POST)
+    @ResponseBody
+    public SemiGetResponseBody run(@RequestParam String projectName, @RequestParam int page, @RequestParam int pageSize) throws Exception {
+        Paging paging = new Paging(page, pageSize);
+        return service.getProjectOpportunities("commons-io", paging);
+    }
+
 }

@@ -1,17 +1,15 @@
 package gr.tsitoumis.geasemi.gea;
 
-import gr.tsitoumis.geasemi.gea.schemas.GeaRunRequestBody;
-import gr.tsitoumis.geasemi.gea.schemas.GeaRunResponseBody;
+import gr.tsitoumis.geasemi.gea.entities.GeaRunRequestBody;
+import gr.tsitoumis.geasemi.gea.entities.GeaRunResponseBody;
 import gr.tsitoumis.geasemi.utils.Commands;
 import gr.tsitoumis.geasemi.utils.GeaSemiException;
 import gr.tsitoumis.geasemi.utils.GitTools;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/gea")

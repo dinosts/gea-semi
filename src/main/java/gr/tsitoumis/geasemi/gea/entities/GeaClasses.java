@@ -1,4 +1,5 @@
-package gr.tsitoumis.geasemi.entities;
+package gr.tsitoumis.geasemi.gea.entities;
+
 
 import java.io.Serializable;
 

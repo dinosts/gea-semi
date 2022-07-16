@@ -1,4 +1,4 @@
-package gr.tsitoumis.geasemi.entities;
+package gr.tsitoumis.geasemi.semi.entities;
 
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "Opportunities")
-@Table(name = "OPPORTUNITIES")
+@Table(name = "opportunities")
 @XmlRootElement
 public class Opportunities implements Serializable {
 
