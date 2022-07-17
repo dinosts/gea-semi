@@ -1,5 +1,7 @@
 package gr.tsitoumis.geasemi.utils;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,11 +62,11 @@ public class Commands {
         int exitCode = runCmd("git clone " + project, "./gitRepositories");
 
         if (exitCode == 128) {
-            throw new GeaSemiException("Project already cloned");
+            throw new GeaSemiException("Project already cloned", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if (exitCode != 0) {
-            throw new GeaSemiException("Git clone FAILED");
+            throw new GeaSemiException("Git clone FAILED", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -80,7 +82,7 @@ public class Commands {
         int exitCode = runCmd(command, semiExtractPosition.toString());
 
         if (exitCode != 0) {
-            throw new GeaSemiException("");
+            throw new GeaSemiException("Semi exit code 0", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -95,7 +97,7 @@ public class Commands {
         int exitCode = runCmd(command, geaExtractPosition.toString());
 
         if (exitCode != 0) {
-            throw new GeaSemiException("");
+            throw new GeaSemiException("Gea exit code 0", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

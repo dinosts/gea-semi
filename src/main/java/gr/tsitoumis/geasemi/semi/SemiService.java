@@ -1,31 +1,32 @@
 package gr.tsitoumis.geasemi.semi;
 
-import gr.tsitoumis.geasemi.semi.entities.SemiGetResponseBody;
-import gr.tsitoumis.geasemi.utils.Paging;
-import gr.tsitoumis.geasemi.semi.repositories.OpportunitiesRepository;
+import gr.tsitoumis.geasemi.semi.entities.Opportunities;
+import gr.tsitoumis.geasemi.semi.entities.SemiOpportunitiesResponseBody;
+import gr.tsitoumis.geasemi.utils.Pagination;
 import gr.tsitoumis.geasemi.utils.PagingResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class SemiService {
 
     @Autowired
-    private OpportunitiesRepository repository;
+    private SemiRepository repository;
 
-    public SemiGetResponseBody getProjectOpportunities(String projectName, Paging paging) {
-        Pageable pageable = PageRequest.of(paging.getPageNumber(), paging.getPageSize());
-        List opportunities = repository.findByProjectName(projectName, pageable);
+    public SemiOpportunitiesResponseBody getProjectOpportunities(String projectName, int page, int pageSize) throws Exception {
+        Pagination pagination = new Pagination(page, pageSize);
+        Pageable pageable = PageRequest.of(pagination.getPageNumber(), pagination.getPageSize());
+        Page<Opportunities> opportunities = repository.findByProjectName(projectName, pageable);
 
-        int allItems = repository.findByProjectNameCount(projectName);
+        int allPages = opportunities.getTotalPages();
 
-        PagingResponseBody pagingResponseBody = new PagingResponseBody(paging.getPageNumber(), paging.getPageSize(), allItems);
+        PagingResponseBody pagingResponseBody = new PagingResponseBody(pagination.getPageNumber(), pagination.getPageSize(), allPages);
 
-        SemiGetResponseBody result = new SemiGetResponseBody(opportunities, pagingResponseBody);
+        SemiOpportunitiesResponseBody result = new SemiOpportunitiesResponseBody(opportunities.getContent(), pagingResponseBody);
 
         return result;
     }

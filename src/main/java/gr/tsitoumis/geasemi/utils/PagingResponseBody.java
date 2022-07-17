@@ -1,42 +1,38 @@
 package gr.tsitoumis.geasemi.utils;
 
 public class PagingResponseBody {
-    private int currentPage;
-    private int allPages;
-    private int currentPageSize;
+    private int current;
+    private int end;
+    private int size;
 
-    public PagingResponseBody(int currentPage, int currentPageSize, int allItems) {
-        this.allPages = (allItems / currentPageSize);
-
-        if (allItems % currentPageSize > 0) {
-            this.allPages++;
-        }
-
-        this.currentPage = currentPage;
-        this.currentPageSize = currentPageSize;
+    public PagingResponseBody(int current, int size, int allPages) {
+        // Api pagination starts from zero.
+        this.end = allPages - 1;
+        this.current = current;
+        this.size = size;
     }
 
-    public int getCurrentPage() {
-        return currentPage;
+    public int getCurrent() {
+        return current;
     }
 
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
+    public void setCurrent(int current) {
+        this.current = current;
     }
 
-    public int getAllPages() {
-        return allPages;
+    public int getEnd() {
+        return end;
     }
 
-    public void setAllPages(int allPages) {
-        this.allPages = allPages;
+    public void setEnd(int end) {
+        this.end = end;
     }
 
-    public int getCurrentPageSize() {
-        return currentPageSize;
+    public int getSize() {
+        return size;
     }
 
-    public void setCurrentPageSize(int currentPageSize) {
-        this.currentPageSize = currentPageSize;
+    public void setSize(int size) {
+        this.size = size;
     }
 }
