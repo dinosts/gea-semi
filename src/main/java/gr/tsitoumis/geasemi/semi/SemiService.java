@@ -3,7 +3,7 @@ package gr.tsitoumis.geasemi.semi;
 import gr.tsitoumis.geasemi.semi.entities.Opportunities;
 import gr.tsitoumis.geasemi.semi.entities.SemiOpportunitiesResponseBody;
 import gr.tsitoumis.geasemi.utils.Pagination;
-import gr.tsitoumis.geasemi.utils.PagingResponseBody;
+import gr.tsitoumis.geasemi.utils.PaginationResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +24,9 @@ public class SemiService {
 
         int allPages = opportunities.getTotalPages();
 
-        PagingResponseBody pagingResponseBody = new PagingResponseBody(pagination.getPageNumber(), pagination.getPageSize(), allPages);
+        PaginationResponseBody paginationResponseBody = new PaginationResponseBody(pagination.getPageNumber(), pagination.getPageSize(), allPages);
 
-        SemiOpportunitiesResponseBody result = new SemiOpportunitiesResponseBody(opportunities.getContent(), pagingResponseBody);
+        SemiOpportunitiesResponseBody result = new SemiOpportunitiesResponseBody(opportunities.getContent(), paginationResponseBody);
 
         return result;
     }

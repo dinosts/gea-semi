@@ -1,11 +1,11 @@
 package gr.tsitoumis.geasemi.utils;
 
-public class PagingResponseBody {
+public class PaginationResponseBody {
     private int current;
     private int end;
     private int size;
 
-    public PagingResponseBody(int current, int size, int allPages) {
+    public PaginationResponseBody(int current, int size, int allPages) {
         // Api pagination starts from zero.
         this.end = allPages - 1;
         this.current = current;

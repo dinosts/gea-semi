@@ -1,6 +1,6 @@
 HELP.md
 target/
-gitRepositories/*
+git-repositories/*
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

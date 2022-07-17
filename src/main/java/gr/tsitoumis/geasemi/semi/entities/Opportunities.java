@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "Opportunities")
-@Table(name = "opportunities")
+@Table(name = "OPPORTUNITIES")
 @XmlRootElement
 public class Opportunities implements Serializable {
 

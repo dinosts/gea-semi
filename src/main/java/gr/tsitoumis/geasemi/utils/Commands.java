@@ -59,7 +59,7 @@ public class Commands {
     // Git
     public static void gitClone(String project) throws Exception {
 
-        int exitCode = runCmd("git clone " + project, "./gitRepositories");
+        int exitCode = runCmd("git clone " + project, "./git-repositories");
 
         if (exitCode == 128) {
             throw new GeaSemiException("Project already cloned", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,9 +73,9 @@ public class Commands {
     // Semi
     public static void semiRun(String name, String lang, String version) throws Exception {
 
-        Path projectPath = Paths.get("gitRepositories/" + name).toAbsolutePath();
-        Path semiPath = Paths.get("geasemiJars/semi-0.0.1-jar-with-dependencies.jar").toAbsolutePath();
-        Path semiExtractPosition = Paths.get("gitRepositories/" + name).toAbsolutePath();
+        Path projectPath = Paths.get("git-repositories/" + name).toAbsolutePath();
+        Path semiPath = Paths.get("jars/semi-0.0.1-jar-with-dependencies.jar").toAbsolutePath();
+        Path semiExtractPosition = Paths.get("git-repositories/" + name).toAbsolutePath();
 
         String command = "java -jar" + " " + semiPath + " " + lang + " " + name + " " + version + " " + projectPath + " " + dbString;
 
@@ -88,9 +88,9 @@ public class Commands {
 
     // Gea
     public static void geaRun(String name, String lang) throws Exception {
-        Path projectPath = Paths.get("gitRepositories/" + name).toAbsolutePath();
-        Path geaPath = Paths.get("geasemiJars/DeRec-GEA-1.0-SNAPSHOT-jar-with-dependencies.jar").toAbsolutePath();
-        Path geaExtractPosition = Paths.get("gitRepositories/" + name).toAbsolutePath();
+        Path projectPath = Paths.get("git-repositories/" + name).toAbsolutePath();
+        Path geaPath = Paths.get("jars/DeRec-GEA-1.0-SNAPSHOT-jar-with-dependencies.jar").toAbsolutePath();
+        Path geaExtractPosition = Paths.get("git-repositories/" + name).toAbsolutePath();
 
         String command = "java -jar" + " " + geaPath + " " + lang + " " + name + " " + projectPath + " " + dbString;
 
@@ -107,9 +107,9 @@ public class Commands {
                 .toLowerCase().startsWith("windows");
 
         if (isWindows) {
-            runCmd("rd /s /q " + projectName, "./gitRepositories");
+            runCmd("rd /s /q " + projectName, "./git-repositories");
         } else {
-            runCmd("rm -rf " + projectName, "./gitRepositories");
+            runCmd("rm -rf " + projectName, "./git-repositories");
         }
     }
 

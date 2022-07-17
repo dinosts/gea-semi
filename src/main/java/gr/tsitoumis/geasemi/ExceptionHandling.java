@@ -32,6 +32,9 @@ public class ExceptionHandling extends ResponseEntityExceptionHandler {
         }
 
         HttpStatus httpStatus;
+        String message = "Internal Server Error";
+
+        System.out.println(exception.getMessage());
 
         if (exception instanceof GeaSemiException) {
             httpStatus = ((GeaSemiException) exception).getHttpStatus();
@@ -39,7 +42,6 @@ public class ExceptionHandling extends ResponseEntityExceptionHandler {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        String message = Objects.requireNonNullElse(exception.getMessage(), "Internal server error");
 
         ExceptionResponse response = new ExceptionResponse(message, httpStatus);
 

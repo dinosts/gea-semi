@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/gea")
 public class GeaController {
-    @RequestMapping(value = "run", method = RequestMethod.POST)
+    @RequestMapping(value = "run", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<GeaRunResponseBody> run(@RequestParam String url, @RequestParam String language) throws Exception {
         String name = GitTools.getProjectName(url);

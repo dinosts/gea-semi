@@ -1,16 +1,15 @@
 package gr.tsitoumis.geasemi.semi.entities;
 
-import gr.tsitoumis.geasemi.utils.PagingResponseBody;
-import org.springframework.data.domain.Page;
+import gr.tsitoumis.geasemi.utils.PaginationResponseBody;
 
 import java.util.List;
 
 public class SemiOpportunitiesResponseBody {
 
     List<Opportunities> opportunities;
-    PagingResponseBody pagination;
+    PaginationResponseBody pagination;
 
-    public SemiOpportunitiesResponseBody(List<Opportunities> opportunities, PagingResponseBody paging) {
+    public SemiOpportunitiesResponseBody(List<Opportunities> opportunities, PaginationResponseBody paging) {
         this.opportunities = opportunities;
         this.pagination = paging;
     }
@@ -23,11 +22,11 @@ public class SemiOpportunitiesResponseBody {
         this.opportunities = opportunities;
     }
 
-    public PagingResponseBody getPaging() {
+    public PaginationResponseBody getPaging() {
         return pagination;
     }
 
-    public void setPaging(PagingResponseBody pagination) {
+    public void setPaging(PaginationResponseBody pagination) {
         this.pagination = pagination;
     }
 
