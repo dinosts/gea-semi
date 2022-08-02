@@ -1,49 +1,41 @@
 package gr.tsitoumis.geasemi;
 
-import gr.tsitoumis.geasemi.utils.Commands;
 import gr.tsitoumis.geasemi.utils.GeaSemiException;
-import gr.tsitoumis.geasemi.utils.GitTools;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Objects;
 
 @ControllerAdvice
 public class ExceptionHandling extends ResponseEntityExceptionHandler {
+    private static Logger logger = LogManager.getLogger(GeaSemiApplication.class);
 
 
     @ExceptionHandler(Exception.class)
+
     public ResponseEntity handleExceptions(Exception exception, WebRequest webRequest) {
-
-        // Guarding endpoints that use git
-        String uri = ((ServletWebRequest) webRequest).getRequest().getRequestURI();
-
-        if (uri.contains("run")) {
-            try {
-                Commands.deleteProject(GitTools.getProjectName(webRequest.getParameter("url")));
-            } catch (Exception e) {
-                System.out.println("Failed to delete project");
-            }
-        }
-
         HttpStatus httpStatus;
         String message = "Internal Server Error";
 
-        System.out.println(exception.getMessage());
 
         if (exception instanceof GeaSemiException) {
             httpStatus = ((GeaSemiException) exception).getHttpStatus();
+            message = exception.getMessage();
         } else {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-
         ExceptionResponse response = new ExceptionResponse(message, httpStatus);
+
+
+        logger.error(MDC.get("Slf4jMDCFilter.UUID"), exception);
+
 
         return new ResponseEntity(response, httpStatus);
     }
@@ -75,4 +67,8 @@ class ExceptionResponse {
         this.message = message;
     }
 
+    @Override
+    public String toString() {
+        return error + " - " + message;
+    }
 }

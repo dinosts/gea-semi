@@ -4,6 +4,7 @@ import gr.tsitoumis.geasemi.semi.entities.SemiOpportunitiesResponseBody;
 import gr.tsitoumis.geasemi.semi.entities.SemiRunResponseBody;
 import gr.tsitoumis.geasemi.utils.Commands;
 import gr.tsitoumis.geasemi.utils.GitTools;
+import gr.tsitoumis.geasemi.utils.MessageResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 public class SemiController {
     @RequestMapping(value = "run", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<SemiRunResponseBody> run(@RequestParam String url, @RequestParam String version, @RequestParam String language) throws Exception {
+    public ResponseEntity<MessageResponseBody> run(@RequestParam String url, @RequestParam String version, @RequestParam String language) throws Exception {
         String name = GitTools.getProjectName(url);
 
         Commands.gitClone(url);
 
         Commands.semiRun(name, language, version);
 
-        ResponseEntity<SemiRunResponseBody> response = ResponseEntity.status(HttpStatus.OK).body(new SemiRunResponseBody("Semi analysis COMPLETED"));
+        ResponseEntity<MessageResponseBody> response = ResponseEntity.status(HttpStatus.OK).body(new MessageResponseBody("Semi analysis COMPLETED"));
 
         Commands.deleteProject(name);
 

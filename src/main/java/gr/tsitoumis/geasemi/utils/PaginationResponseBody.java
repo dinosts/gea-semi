@@ -7,7 +7,10 @@ public class PaginationResponseBody {
 
     public PaginationResponseBody(int current, int size, int allPages) {
         // Api pagination starts from zero.
-        this.end = allPages - 1;
+        if (allPages - 1 >= 0) {
+            this.end = allPages - 1;
+        }
+
         this.current = current;
         this.size = size;
     }

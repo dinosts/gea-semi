@@ -1,9 +1,9 @@
-package gr.tsitoumis.geasemi.gea.entities;
+package gr.tsitoumis.geasemi.utils;
 
-public class GeaRunResponseBody {
+public class MessageResponseBody {
     String message;
 
-    public GeaRunResponseBody(String message) {
+    public MessageResponseBody(String message) {
         this.message = message;
     }
 
