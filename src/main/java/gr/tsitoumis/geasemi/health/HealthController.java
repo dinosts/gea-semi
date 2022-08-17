@@ -8,15 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HealthController {
-    @RequestMapping(value = "health")
+    @RequestMapping(value = {"health", "healthy", "healthz", "",})
     @ResponseBody
-    public ResponseEntity<MessageResponseBody> health() throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponseBody("Ok"));
-    }
-
-    @RequestMapping(value = "")
-    @ResponseBody
-    public ResponseEntity<MessageResponseBody> empty() throws Exception {
+    public ResponseEntity<MessageResponseBody> health() {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponseBody("Ok"));
     }
 }

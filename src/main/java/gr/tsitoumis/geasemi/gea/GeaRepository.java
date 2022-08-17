@@ -1,16 +1,15 @@
 package gr.tsitoumis.geasemi.gea;
 
-import gr.tsitoumis.geasemi.semi.entities.Opportunities;
+import gr.tsitoumis.geasemi.gea.entities.GeaClasses;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
+public interface GeaRepository extends PagingAndSortingRepository<GeaClasses, Integer> {
 
-public interface GeaRepository extends PagingAndSortingRepository<Opportunities, Integer> {
-
-    @Query("SELECT t FROM GeaClasses t WHERE t.name = ?1")
-    List findGeaClassesByProjectName(String projectName, Pageable pageable);
+    @Query("SELECT t FROM GeaClasses t WHERE t.projectName = ?1")
+    Page<GeaClasses> findGeaClassesByProjectName(String projectName, Pageable pageable);
 
 }
