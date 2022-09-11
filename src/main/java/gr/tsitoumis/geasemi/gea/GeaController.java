@@ -23,6 +23,8 @@ public class GeaController {
         String name = GitTools.getProjectName(url);
         Commands.gitClone(url);
         Commands.geaRun(name, language);
+        Commands.deleteProject(name);
+
 
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponseBody("Gea analysis COMPLETED"));
     }

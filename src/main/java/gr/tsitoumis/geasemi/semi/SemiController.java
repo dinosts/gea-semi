@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/semi")
 public class SemiController {
-    @RequestMapping(value = "run", method = RequestMethod.POST)
+    @RequestMapping(value = "run", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<MessageResponseBody> run(@RequestParam String url, @RequestParam String version, @RequestParam String language) throws Exception {
         String name = GitTools.getProjectName(url);
