@@ -13,7 +13,7 @@ import java.nio.file.*;
 public class Scheduler {
     private static Logger logger = LogManager.getLogger(GeaSemiApplication.class);
 
-    @Scheduled(cron = "1 */3 * * * ?")
+    @Scheduled(cron = "0 0 */3 * * *")
     public void cleanGitProjects() {
         try {
             final String path = Paths.get("git-repositories").toAbsolutePath().toString();

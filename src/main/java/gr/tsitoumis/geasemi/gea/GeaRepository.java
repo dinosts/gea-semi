@@ -15,8 +15,8 @@ public interface GeaRepository extends PagingAndSortingRepository<GeaClasses, In
     @Query("SELECT t FROM GeaClasses t WHERE t.projectName = ?1")
     Page<GeaClasses> findGeaClassesByProjectName(String projectName, Pageable pageable);
 
-    @Query("SELECT t FROM GeaPackages t WHERE t.projectName = ?1 AND t.isNew = ?2")
-    Page<GeaPackages> findGeaPackagesByProjectName(String projectName, boolean isNew, Pageable pageable);
+    @Query("SELECT t FROM GeaPackages t WHERE t.projectName = ?1")
+    Page<GeaPackages> findGeaPackagesByProjectName(String projectName, Pageable pageable);
 
     @Query("SELECT t FROM GeaClasses t WHERE t.packageID = ?1 AND t.isNew = ?2 ")
     List<GeaClasses> findGeaClassesByPackageId(int packageId, boolean isNew);

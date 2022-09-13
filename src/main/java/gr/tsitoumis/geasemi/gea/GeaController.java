@@ -36,9 +36,9 @@ public class GeaController {
         return service.getGeaClasses(projectName, page, pageSize);
     }
 
-    @RequestMapping(value = "packages", method = RequestMethod.GET)
+    @RequestMapping(value = "packages/movable-classes", method = RequestMethod.GET)
     @ResponseBody
-    public GeaPackagesResponse geaPackages(@RequestParam String projectName, @RequestParam boolean isNew, @RequestParam int page, @RequestParam int pageSize) throws Exception {
-        return service.getGeaPackagesWithClasses(projectName, isNew, page, pageSize);
+    public GeaPackagesResponse geaPackages(@RequestParam String projectName, @RequestParam int page, @RequestParam int pageSize) throws Exception {
+        return service.getGeaPackagesWithMovableClasses(projectName, page, pageSize);
     }
 }

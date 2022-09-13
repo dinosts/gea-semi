@@ -30,10 +30,10 @@ public class GeaService {
         return new GeaClassesResponseBody(geaClasses.getContent(), paginationResponseBody);
     }
 
-    public GeaPackagesResponse getGeaPackagesWithClasses(String projectName, boolean isNew, int page, int pageSize) throws Exception {
+    public GeaPackagesResponse getGeaPackagesWithMovableClasses(String projectName, int page, int pageSize) throws Exception {
         Pagination pagination = new Pagination(page, pageSize);
         Pageable pageable = PageRequest.of(pagination.getPageNumber(), pagination.getPageSize());
-        Page<GeaPackages> geaPackages = repository.findGeaPackagesByProjectName(projectName, isNew, pageable);
+        Page<GeaPackages> geaPackages = repository.findGeaPackagesByProjectName(projectName, pageable);
 
         int allPages = geaPackages.getTotalPages();
 
@@ -41,9 +41,11 @@ public class GeaService {
 
 
         for (GeaPackages geaPackage : geaPackages.getContent()) {
-            List<GeaClasses> geaClasses = repository.findGeaClassesByPackageId(geaPackage.getId().intValue(), isNew);
-
-            packages.add(new GeaPackagesWithClasses(geaPackage, geaClasses));
+            // isNew = true means movable.
+            List<GeaClasses> geaClasses = repository.findGeaClassesByPackageId(geaPackage.getId().intValue(), true);
+            if (!geaClasses.isEmpty()) {
+                packages.add(new GeaPackagesWithClasses(geaPackage, geaClasses));
+            }
         }
 
 
