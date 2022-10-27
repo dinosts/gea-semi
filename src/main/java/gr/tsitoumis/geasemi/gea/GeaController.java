@@ -2,6 +2,7 @@ package gr.tsitoumis.geasemi.gea;
 
 import gr.tsitoumis.geasemi.gea.entities.GeaClassesResponseBody;
 import gr.tsitoumis.geasemi.gea.entities.GeaPackagesResponse;
+import gr.tsitoumis.geasemi.gea.entities.GeaProjectsReponse;
 import gr.tsitoumis.geasemi.utils.Commands;
 import gr.tsitoumis.geasemi.utils.GitTools;
 import gr.tsitoumis.geasemi.utils.MessageResponseBody;
@@ -40,5 +41,11 @@ public class GeaController {
     @ResponseBody
     public GeaPackagesResponse geaPackages(@RequestParam String projectName, @RequestParam int page, @RequestParam int pageSize) throws Exception {
         return service.getGeaPackagesWithMovableClasses(projectName, page, pageSize);
+    }
+
+    @RequestMapping(value = "projects", method = RequestMethod.GET)
+    @ResponseBody
+    public GeaProjectsReponse geaProjects(@RequestParam String projectName) throws Exception {
+        return service.getGeaProject(projectName);
     }
 }

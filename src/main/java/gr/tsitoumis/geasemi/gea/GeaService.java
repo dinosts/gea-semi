@@ -54,4 +54,13 @@ public class GeaService {
         return new GeaPackagesResponse(packages, paginationResponseBody);
     }
 
+    public GeaProjectsReponse getGeaProject(String projectName) {
+        GeaProjects project = repository.findGeaProject(projectName);
+
+        double cohesion_difference = project.getCohesionOld() - project.getCohesionNew();
+        double coupling_difference = project.getCouplingOld() - project.getCouplingNew();
+
+        return new GeaProjectsReponse(project, Math.abs(coupling_difference), Math.abs(cohesion_difference));
+    }
+
 }

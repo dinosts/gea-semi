@@ -2,6 +2,7 @@ package gr.tsitoumis.geasemi.gea;
 
 import gr.tsitoumis.geasemi.gea.entities.GeaClasses;
 import gr.tsitoumis.geasemi.gea.entities.GeaPackages;
+import gr.tsitoumis.geasemi.gea.entities.GeaProjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -20,4 +21,7 @@ public interface GeaRepository extends PagingAndSortingRepository<GeaClasses, In
 
     @Query("SELECT t FROM GeaClasses t WHERE t.packageID = ?1 AND t.isNew = ?2 ")
     List<GeaClasses> findGeaClassesByPackageId(int packageId, boolean isNew);
+
+    @Query("SELECT t FROM GeaProjects t WHERE t.name = ?1")
+    GeaProjects findGeaProject(String projectName);
 }
