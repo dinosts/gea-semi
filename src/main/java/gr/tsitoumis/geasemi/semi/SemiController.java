@@ -1,7 +1,8 @@
 package gr.tsitoumis.geasemi.semi;
 
+import java.nio.file.Paths;
+
 import gr.tsitoumis.geasemi.semi.entities.SemiOpportunitiesResponseBody;
-import gr.tsitoumis.geasemi.semi.entities.SemiRunResponseBody;
 import gr.tsitoumis.geasemi.utils.Commands;
 import gr.tsitoumis.geasemi.utils.GitTools;
 import gr.tsitoumis.geasemi.utils.MessageResponseBody;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import gr.tsitoumis.geasemi.semi.tool.Semi;
 
 @Controller
 @RequestMapping("/semi")
@@ -22,6 +24,8 @@ public class SemiController {
         Commands.gitClone(url);
 
         Commands.semiRun(name, language, version);
+
+        new Semi(language, name, version, Paths.get("git-repositories/" + name).toAbsolutePath().toString());
 
         ResponseEntity<MessageResponseBody> response = ResponseEntity.status(HttpStatus.OK).body(new MessageResponseBody("Semi analysis COMPLETED"));
 
