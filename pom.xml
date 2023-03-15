@@ -19,6 +19,19 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <repositories>
+        <repository>
+            <id>extlibs-repo</id>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <url>file:///${project.basedir}/extlibs/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.eclipse.jdt</groupId>
@@ -60,6 +73,26 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>macrofocus</groupId>
+            <artifactId>macrofocus-common</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>macrofocus</groupId>
+            <artifactId>macrofocus-slider</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>macrofocus</groupId>
+            <artifactId>macrofocus-treemap</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>macrofocus</groupId>
+            <artifactId>macrofocus-visualization</artifactId>
+            <version>1</version>
         </dependency>
     </dependencies>
 
