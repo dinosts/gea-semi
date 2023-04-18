@@ -3,11 +3,12 @@ package gr.tsitoumis.geasemi.semi.tool.source.jarExecuteClass;
 import java.io.File;
 import java.nio.file.Paths;
 
+import gr.tsitoumis.geasemi.semi.SemiService;
 import gr.tsitoumis.geasemi.semi.tool.source.utils.ExtraParseUtils;
 
 public class Semitool {
 
-    public static void run(String language, String name, String version, String path) throws Exception {
+    public static void run(SemiService service, String language, String name, String version, String path) throws Exception {
 
         doEndStuff();
 
@@ -20,7 +21,7 @@ public class Semitool {
 
         long start = System.currentTimeMillis();
         long end;
-        BasicController controller = new BasicController(language, name, version, path, "195.251.210.147:3363", "metrics", "metrics", "308d139ce20d7695a301d723f8bf379d1fc7dd899966d8102578d4acc85bbf8e");
+        BasicController controller = new BasicController(service, language, name, version, path);
         boolean result = controller.runExperiment();
 
         doEndStuff();

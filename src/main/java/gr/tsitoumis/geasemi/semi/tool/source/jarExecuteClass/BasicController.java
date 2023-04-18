@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import gr.tsitoumis.geasemi.semi.SemiService;
 import gr.tsitoumis.geasemi.semi.tool.source.AST.ClassParser;
 import gr.tsitoumis.geasemi.semi.tool.source.cluster.Opportunity;
 import gr.tsitoumis.geasemi.semi.tool.source.db.DbController;
@@ -41,13 +42,11 @@ public class BasicController {
 
     private int C_ProjectVersion = 999;
 
-    public BasicController(String type, String projectName, String projectVersion, String directoryPath, String serverName, String databaseName, String username, String password) {
+    public BasicController(SemiService service, String type, String projectName, String projectVersion, String directoryPath) {
         if (type == null || type.isEmpty() || type.trim().length() == 0
                 || projectName == null || projectName.isEmpty() || projectName.trim().length() == 0
                 || projectVersion == null || projectVersion.isEmpty() || projectVersion.trim().length() == 0
-                || directoryPath == null || directoryPath.isEmpty() || directoryPath.trim().length() == 0
-                || serverName == null || serverName.isEmpty() || serverName.trim().length() == 0
-                || databaseName == null || databaseName.isEmpty() || databaseName.trim().length() == 0) {
+                || directoryPath == null || directoryPath.isEmpty() || directoryPath.trim().length() == 0){
             return;
         }
         if (!type.equals("c") && !type.equals("cpp") && !type.equals("java")) {
@@ -55,11 +54,8 @@ public class BasicController {
         }
 
         this.C_ProjectVersion = Integer.valueOf(projectVersion);
-        dbCon = new DbController(serverName, databaseName, username, password);
-        if (!dbCon.isReady()) {
-            System.out.println("Problem with databaseConnection");
-            //return; // ***POINT TEST_COM
-        }
+
+        dbCon = new DbController(service);
         this.projectProgramingLanguage = type;
         this.projectName = projectName;
         this.projectDirectoryPath = directoryPath;
@@ -70,13 +66,6 @@ public class BasicController {
 
     public boolean runExperiment() {
         System.out.println("expStarted"); // ***DEBUG
-        if (this.dbCon == null || !this.dbCon.isReady()) {
-            System.out.println("Problem with databaseConnection");
-            //return false; // ***POINT TEST_COM
-        }
-
-        dbCon.closeConn();
-
         boolean commit = true;
 
         System.out.println("b-sw"); // ***DEBUG
@@ -115,24 +104,12 @@ public class BasicController {
         System.out.println("***DEBUG beforeRef   --->   " + beforeRef);
 
         writeLogSkippedFiles();
-        dbCon.getNewConnection();
 
-        if (!this.dbCon.isReady()) {
-            System.out.println("Problem with databaseConnection");
-            return false;
-        }
         System.out.println("Number of refs: " + number_of_refs);
 
         commit = commit && dbCon.dbActions(projectName, C_ProjectVersion);
 
-        if (commit) {
-            dbCon.connCommitAndClose();
-            System.out.println("FIN!");
-            return true;
-        } else {
-            dbCon.connRollBackAndClose();
-            return false;
-        }
+        return true;
     }
 
     private String getMeCorrectNameFormat(String oldName) {

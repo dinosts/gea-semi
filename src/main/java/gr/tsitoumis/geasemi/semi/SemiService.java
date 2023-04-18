@@ -9,6 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.stream.StreamSupport;
 
 
 @Service
@@ -30,4 +35,23 @@ public class SemiService {
 
         return result;
     }
+
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    public boolean saveOpportunitiesArray(ArrayList<Opportunities> array) {
+
+        Iterable result = repository.saveAll(array);
+
+        if (result instanceof ArrayList ){
+            return !((ArrayList) result).isEmpty();
+        }
+
+        return false;
+    }
+
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    public long deleteByProjectNameAndProjectVersion(String projectName, int projectVersion) {
+        return repository.deleteByProjectNameAndProjectVersion(projectName,projectVersion);
+    }
+
+
 }

@@ -15,4 +15,5 @@ public interface SemiRepository extends PagingAndSortingRepository<Opportunities
     @Query("SELECT COUNT(t) FROM Opportunities t WHERE t.projectName = ?1")
     int findByProjectNameCount(String projectName);
 
+    long deleteByProjectNameAndProjectVersion(String projectName, int projectVersion);
 }
