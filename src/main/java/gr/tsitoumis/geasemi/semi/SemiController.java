@@ -25,7 +25,7 @@ public class SemiController {
 
         Commands.gitClone(url);
 
-        Semitool.run(service, language, name, version, Paths.get("git-repositories/" + name).toAbsolutePath().toString());
+        new Semitool().run(service, language, name, version, Paths.get("git-repositories/" + name).toAbsolutePath().toString());
 
         ResponseEntity<MessageResponseBody> response = ResponseEntity.status(HttpStatus.OK).body(new MessageResponseBody("Semi analysis COMPLETED"));
 

@@ -8,7 +8,7 @@ import gr.tsitoumis.geasemi.semi.tool.source.utils.ExtraParseUtils;
 
 public class Semitool {
 
-    public static void run(SemiService service, String language, String name, String version, String path) throws Exception {
+    public void run(SemiService service, String language, String name, String version, String path) throws Exception {
 
         doEndStuff();
 
@@ -36,7 +36,7 @@ public class Semitool {
 
     }
 
-    private static void doEndStuff() {
+    private void doEndStuff() {
         File folder = new File(System.getProperty("user.dir"));
         File fileList[] = folder.listFiles();
         for (int i = 0; i < fileList.length; i++) {
