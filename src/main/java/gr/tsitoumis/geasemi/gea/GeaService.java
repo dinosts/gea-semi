@@ -43,9 +43,7 @@ public class GeaService {
         for (GeaPackages geaPackage : geaPackages.getContent()) {
             // isNew = true means movable.
             List<GeaClasses> geaClasses = repository.findGeaClassesByPackageId(geaPackage.getId().intValue(), true);
-            if (!geaClasses.isEmpty()) {
-                packages.add(new GeaPackagesWithClasses(geaPackage, geaClasses));
-            }
+            packages.add(new GeaPackagesWithClasses(geaPackage, geaClasses));
         }
 
 
